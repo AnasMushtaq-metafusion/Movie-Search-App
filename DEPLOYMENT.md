@@ -5,6 +5,7 @@
 I've created **MovieFlix**, a beautiful and modern movie search application with:
 
 ### ✨ Features
+
 - **React 19** with TypeScript for type safety
 - **Vite** for lightning-fast development
 - **OMDB API** integration for real movie data
@@ -14,6 +15,7 @@ I've created **MovieFlix**, a beautiful and modern movie search application with
 - **Movie cards** with posters, titles, years, and types
 
 ### 📁 Project Structure
+
 ```
 movie-search-app/
 ├── src/
@@ -84,6 +86,7 @@ Then open: http://localhost:5173
 5. Click "Deploy"
 
 Vercel will automatically:
+
 - Build your app
 - Give you a live URL
 - Auto-deploy on every push
@@ -93,15 +96,19 @@ Vercel will automatically:
 ## 🎨 Customize the App
 
 ### Change the API Key (Optional)
+
 In `src/App.tsx`, line 6:
+
 ```typescript
-const API_KEY = '6d157d75'  // Current free OMDB API key
+const API_KEY = "6d157d75"; // Current free OMDB API key
 ```
 
 You can get your own free key at: http://www.omdbapi.com/apikey.aspx
 
 ### Change the Color Scheme
+
 In `src/App.css`, update the gradient:
+
 ```css
 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 ```
@@ -122,6 +129,7 @@ Try different gradients from: https://uigradients.com/
 ## 🎓 What You Learned
 
 This project demonstrates:
+
 - React Hooks (useState, useEffect)
 - TypeScript interfaces and types
 - API integration with fetch
