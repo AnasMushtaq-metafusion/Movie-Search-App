@@ -8,7 +8,7 @@ A beautiful and responsive movie search application built with React, TypeScript
 
 ## ✨ Features
 
-- 🔍 **Real-time Search**: Search for movies, series, and episodes instantly
+- 🔍 **Search**: Search for movies, series, and episodes with paginated results
 - 🎨 **Modern UI**: Beautiful gradient design with smooth animations
 - 📱 **Responsive**: Works perfectly on desktop, tablet, and mobile devices
 - ⚡ **Fast**: Built with Vite for lightning-fast performance
@@ -19,15 +19,15 @@ A beautiful and responsive movie search application built with React, TypeScript
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
+- Node.js (v22 or higher)
+- npm
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/movie-search-app.git
-cd movie-search-app
+git clone https://github.com/AnasMushtaq-metafusion/Movie-Search-App.git
+cd Movie-Search-App
 ```
 
 2. Install dependencies:
@@ -35,18 +35,27 @@ cd movie-search-app
 npm install
 ```
 
-3. Start the development server:
+3. Configure your OMDB API key:
+```bash
+cp .env.example .env
+```
+Then edit `.env` and set `VITE_OMDB_API_KEY` to a key from http://www.omdbapi.com/apikey.aspx
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
+5. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for production build and deployment instructions.
 
 ## 🛠️ Built With
 
 - **React 19** - JavaScript library for building user interfaces
 - **TypeScript** - Typed superset of JavaScript
 - **Vite** - Next-generation frontend tooling
+- **Vitest** & **React Testing Library** - Unit and component testing
 - **OMDB API** - The Open Movie Database API
 - **CSS3** - Modern styling with gradients and animations
 
@@ -56,12 +65,14 @@ npm run dev
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run linter
+- `npm test` - Run the test suite
+- `npm run test:watch` - Run tests in watch mode
 
 ## 🎯 Usage
 
 1. Enter a movie name in the search bar
 2. Press Enter or click the Search button
-3. Browse through the results
+3. Browse through the results, and click "Load more" for additional pages
 4. Hover over movie cards for cool animations
 
 ## 🤝 Contributing
@@ -70,11 +81,7 @@ Contributions, issues, and feature requests are welcome!
 
 ## 📝 License
 
-This project is open source and available under the MIT License.
-
-## 👤 Author
-
-Built with ❤️ by a React Developer
+This project is open source and available under the [MIT License](./LICENSE).
 
 ## 🙏 Acknowledgments
 
