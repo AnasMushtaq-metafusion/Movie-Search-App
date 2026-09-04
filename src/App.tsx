@@ -1,61 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import MovieCard from "./components/MovieCard";
 import SearchBar from "./components/SearchBar";
-
-const API_KEY = "6d157d75";
-const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
-
-interface Movie {
-  imdbID: string;
-  Title: string;
-  Year: string;
-  Poster: string;
-  Type: string;
-}
-
-interface ApiResponse {
-  Search: Movie[];
-  totalResults: string;
-  Response: string;
-}
+import ErrorBoundary from "./components/ErrorBoundary";
+import { useMovieSearch } from "./hooks/useMovieSearch";
 
 function App() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const searchMovies = async (query: string) => {
-    if (!query.trim()) {
-      setMovies([]);
-      setError("");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch(`${API_URL}&s=${encodeURIComponent(query)}`);
-      const data: ApiResponse = await response.json();
-
-      if (data.Response === "True") {
-        setMovies(data.Search);
-      } else {
-        setMovies([]);
-        setError("No movies found. Try a different search!");
-      }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-      setMovies([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    movies,
+    loading,
+    error,
+    searchTerm,
+    setSearchTerm,
+    hasMore,
+    search,
+    loadMore,
+  } = useMovieSearch();
 
   useEffect(() => {
-    searchMovies("Spider-Man");
+    search("Spider-Man");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -70,30 +34,46 @@ function App() {
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        onSearch={searchMovies}
+        onSearch={search}
       />
 
       <div className="container">
         {loading && (
-          <div className="loading">
+          <div className="loading" role="status" aria-live="polite">
             <div className="spinner"></div>
             <p>Searching for movies...</p>
           </div>
         )}
 
         {error && !loading && (
-          <div className="error">
+          <div className="error" role="alert" aria-live="assertive">
             <span className="emoji">😕</span>
             <p>{error}</p>
           </div>
         )}
 
         {!loading && !error && movies.length > 0 && (
-          <div className="movies-grid">
-            {movies.map((movie) => (
-              <MovieCard key={movie.imdbID} movie={movie} />
-            ))}
-          </div>
+          <>
+            <div className="movies-grid">
+              {movies.map((movie) => (
+                <ErrorBoundary key={movie.imdbID}>
+                  <MovieCard movie={movie} />
+                </ErrorBoundary>
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="load-more">
+                <button
+                  type="button"
+                  className="load-more-button"
+                  onClick={loadMore}
+                >
+                  Load more
+                </button>
+              </div>
+            )}
+          </>
         )}
 
         {!loading && !error && movies.length === 0 && !searchTerm && (

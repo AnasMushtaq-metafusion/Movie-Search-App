@@ -1,25 +1,26 @@
-interface Movie {
-  imdbID: string;
-  Title: string;
-  Year: string;
-  Poster: string;
-  Type: string;
-}
+import { memo } from "react";
+import type { Movie } from "../types/movie";
+import noPoster from "../assets/no-poster.svg";
 
 interface MovieCardProps {
   movie: Movie;
 }
 
 const MovieCard = ({ movie }: MovieCardProps) => {
-  const posterUrl =
-    movie.Poster !== "N/A"
-      ? movie.Poster
-      : "https://via.placeholder.com/400x600/1a1a2e/eee?text=No+Image";
+  const posterUrl = movie.Poster !== "N/A" ? movie.Poster : noPoster;
 
   return (
     <div className="movie-card">
       <div className="movie-poster">
-        <img src={posterUrl} alt={movie.Title} />
+        <img
+          src={posterUrl}
+          alt={movie.Title}
+          loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = noPoster;
+          }}
+        />
         <div className="movie-type">{movie.Type}</div>
       </div>
       <div className="movie-info">
@@ -30,4 +31,4 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   );
 };
 
-export default MovieCard;
+export default memo(MovieCard);
